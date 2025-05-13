@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     ModelTrending modelTrending;
     RecyclerView rvCategories, rvTrending;
     CardView cvHistory;
+    LinearLayout cvSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void setInitLayout() {
         cvHistory = findViewById(R.id.cvHistory);
+        cvSearch = findViewById(R.id.cvSearch);
+
         cvHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        cvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -82,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setTrending() {
-        modelTrending = new ModelTrending(R.drawable.complete_1,"Menu 1", "2.200 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_1, "Menu 1", "2.200 disukai");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_2,"Menu 2", "1.220 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_2, "Menu 2", "1.220 disukai");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_3,"Menu 3", "345 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_3, "Menu 3", "345 disukai");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_4,"Menu 4", "590 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_4, "Menu 4", "590 disukai");
         modelTrendingList.add(modelTrending);
 
         trendingAdapter = new TrendingAdapter(this, modelTrendingList);
@@ -121,5 +133,4 @@ public class MainActivity extends AppCompatActivity {
         }
         window.setAttributes(layoutParams);
     }
-
 }
