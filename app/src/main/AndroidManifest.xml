@@ -11,8 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YumMap"
         tools:targetApi="31">
-        <activity android:name=".main.SearchActivity" android:theme="@style/Theme.YumMap"
-            android:exported="false" />
+        <activity
+            android:name=".payment.PaymentActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".main.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.YumMap" />
         <activity
             android:name=".history.HistoryOrderActivity"
             android:exported="false" />

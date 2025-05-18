@@ -6,38 +6,44 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.yummap.database.DatabaseClient;
-import com.example.yummap.database.DatabaseModel;
-import com.example.yummap.database.dao.DatabaseDao;
+import com.example.yummap.database.UserModel;
+import com.example.yummap.database.dao.UserDao;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
 
 public class RegisterViewModel extends AndroidViewModel {
 
-    DatabaseDao databaseDao;
+    private UserDao userDao;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    //untuk inisialisasi databaseDao
+    // For initializing userDao
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-
-        databaseDao = DatabaseClient.getInstance(application).getAppDatabase().databaseDao();
+        userDao = DatabaseClient.getInstance(application).getAppDatabase().userDao();
     }
 
-    //untuk insert data sesuai dengan menu register
-    public void addDataRegister(final String strEmail, final String strUsername,
-                                final String strPassword) {
-        Completable.fromAction(() -> {
-                    DatabaseModel databaseModel = new DatabaseModel();
-                    databaseModel.email = strEmail;
-                    databaseModel.username = strUsername;
-                    databaseModel.password = strPassword;
-                    databaseDao.insertData(databaseModel);
+    // For inserting registration data
+    public void addDataRegister(final String strEmail, final String strUsername, final String strPassword) {
+        Disposable disposable = Completable.fromAction(() -> {
+                    UserModel userModel = new UserModel();
+                    userModel.setEmail(strEmail);
+                    userModel.setUsername(strUsername);
+                    userModel.setPassword(strPassword);
+                    userDao.insertUser(userModel);
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
+        compositeDisposable.add(disposable);
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.clear();
+    }
 }

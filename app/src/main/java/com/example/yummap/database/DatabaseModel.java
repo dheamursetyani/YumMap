@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-//untuk membuat tabel dan kolom ke database. tableName = tabel; name = kolom;
-@Entity(tableName = "tbl_catering")
+@Entity(tableName = "order_table")
 public class DatabaseModel implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -22,14 +21,11 @@ public class DatabaseModel implements Serializable {
     @ColumnInfo(name = "harga")
     public int harga;
 
-    @ColumnInfo(name = "email")
-    public String email;
+    @ColumnInfo(name = "status")
+    public String status; // e.g., "segera diantar" or "sudah sampai"
 
-    @ColumnInfo(name = "username")
-    public String username;
-
-    @ColumnInfo(name = "password")
-    public String password;
+    @ColumnInfo(name = "is_paid")
+    public boolean isPaid; // true if paid, false otherwise
 
     public DatabaseModel() {}
 
@@ -65,27 +61,19 @@ public class DatabaseModel implements Serializable {
         this.harga = harga;
     }
 
-    public String getEmail() {
-        return email;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getUsername() {
-        return username;
+    public boolean isPaid() {
+        return isPaid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPaid(boolean paid) {
+        this.isPaid = paid;
     }
 }

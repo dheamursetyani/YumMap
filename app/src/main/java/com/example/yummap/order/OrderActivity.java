@@ -94,7 +94,7 @@ public class OrderActivity extends AppCompatActivity {
     private void setPaket1() {
         imageAdd1.setOnClickListener(v -> {
             itemCount1 = itemCount1 + 1;
-            tvPaket1.setText(itemCount1);
+            tvPaket1.setText(String.valueOf(itemCount1));
             countP1 = paket1 * itemCount1;
             setTotalPrice();
         });
@@ -102,7 +102,7 @@ public class OrderActivity extends AppCompatActivity {
         imageMinus1.setOnClickListener(v -> {
             if (itemCount1 > 0) {
                 itemCount1 = itemCount1 - 1;
-                tvPaket1.setText(itemCount1);
+                tvPaket1.setText(String.valueOf(itemCount1));
             }
             countP1 = paket1 * itemCount1;
             setTotalPrice();
@@ -112,7 +112,7 @@ public class OrderActivity extends AppCompatActivity {
     private void setPaket2() {
         imageAdd2.setOnClickListener(v -> {
             itemCount2 = itemCount2 + 1;
-            tvPaket2.setText(itemCount2);
+            tvPaket2.setText(String.valueOf(itemCount2));
             countP2 = paket2 * itemCount2;
             setTotalPrice();
         });
@@ -120,7 +120,7 @@ public class OrderActivity extends AppCompatActivity {
         imageMinus2.setOnClickListener(v -> {
             if (itemCount2 > 0) {
                 itemCount2 = itemCount2 - 1;
-                tvPaket2.setText(itemCount2);
+                tvPaket2.setText(String.valueOf(itemCount2));
             }
             countP2 = paket2 * itemCount2;
             setTotalPrice();
@@ -130,7 +130,7 @@ public class OrderActivity extends AppCompatActivity {
     private void setPaket3() {
         imageAdd3.setOnClickListener(v -> {
             itemCount3 = itemCount3 + 1;
-            tvPaket3.setText(itemCount3);
+            tvPaket3.setText(String.valueOf(itemCount3));
             countP3 = paket3 * itemCount3;
             setTotalPrice();
         });
@@ -138,7 +138,7 @@ public class OrderActivity extends AppCompatActivity {
         imageMinus3.setOnClickListener(v -> {
             if (itemCount3 > 0) {
                 itemCount3 = itemCount3 - 1;
-                tvPaket3.setText(itemCount3);
+                tvPaket3.setText(String.valueOf(itemCount3));
             }
             countP3 = paket3 * itemCount3;
             setTotalPrice();
@@ -148,7 +148,7 @@ public class OrderActivity extends AppCompatActivity {
     private void setPaket4() {
         imageAdd4.setOnClickListener(v -> {
             itemCount4 = itemCount4 + 1;
-            tvPaket4.setText(itemCount4);
+            tvPaket4.setText(String.valueOf(itemCount4));
             countP4 = paket4 * itemCount4;
             setTotalPrice();
         });
@@ -156,7 +156,7 @@ public class OrderActivity extends AppCompatActivity {
         imageMinus4.setOnClickListener(v -> {
             if (itemCount4 > 0) {
                 itemCount4 = itemCount4 - 1;
-                tvPaket4.setText(itemCount4);
+                tvPaket4.setText(String.valueOf(itemCount4));
             }
             countP4 = paket4 * itemCount4;
             setTotalPrice();
@@ -165,8 +165,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private void setPaket5() {
         imageAdd5.setOnClickListener(v -> {
-            itemCount5 = itemCount1 + 1;
-            tvPaket5.setText(itemCount5);
+            itemCount5 = itemCount5 + 1;
+            tvPaket5.setText(String.valueOf(itemCount5));
             countP5 = paket5 * itemCount5;
             setTotalPrice();
         });
@@ -174,7 +174,7 @@ public class OrderActivity extends AppCompatActivity {
         imageMinus5.setOnClickListener(v -> {
             if (itemCount5 > 0) {
                 itemCount5 = itemCount5 - 1;
-                tvPaket5.setText(itemCount5);
+                tvPaket5.setText(String.valueOf(itemCount5));
             }
             countP5 = paket5 * itemCount5;
             setTotalPrice();
@@ -184,7 +184,7 @@ public class OrderActivity extends AppCompatActivity {
     private void setPaket6() {
         imageAdd6.setOnClickListener(v -> {
             itemCount6 = itemCount6 + 1;
-            tvPaket6.setText(itemCount6);
+            tvPaket6.setText(String.valueOf(itemCount6));
             countP6 = paket6 * itemCount6;
             setTotalPrice();
         });
@@ -192,7 +192,7 @@ public class OrderActivity extends AppCompatActivity {
         imageMinus6.setOnClickListener(v -> {
             if (itemCount6 > 0) {
                 itemCount6 = itemCount6 - 1;
-                tvPaket6.setText(itemCount6);
+                tvPaket6.setText(String.valueOf(itemCount6));
             }
             countP6 = paket6 * itemCount6;
             setTotalPrice();
@@ -212,8 +212,8 @@ public class OrderActivity extends AppCompatActivity {
             if (totalItems == 0 || totalPrice == 0) {
                 Toast.makeText(OrderActivity.this, "Ups, pilih menu makanan dulu!",
                         Toast.LENGTH_SHORT).show();
-            } else if (totalItems < 10) {
-                Toast.makeText(OrderActivity.this, "Ups, minimal 10 pesanan!",
+            } else if (totalItems < 1) {
+                Toast.makeText(OrderActivity.this, "Ups, minimal 1 pesanan!",
                         Toast.LENGTH_SHORT).show();
             } else {
                 orderViewModel.addDataOrder(strTitle, totalItems, totalPrice);
