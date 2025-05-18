@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,9 @@ import com.example.yummap.R;
 import com.example.yummap.history.HistoryOrderActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvCategories, rvTrending;
     CardView cvHistory;
     LinearLayout cvSearch;
+    TextView tvGreeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
         setInitLayout();
         setCategories();
         setTrending();
+        setGreeting();
     }
 
     private void setInitLayout() {
         cvHistory = findViewById(R.id.cvHistory);
         cvSearch = findViewById(R.id.cvSearch);
+        tvGreeting = findViewById(R.id.tvGreeting);
 
         cvHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -105,6 +112,33 @@ public class MainActivity extends AppCompatActivity {
 
         trendingAdapter = new TrendingAdapter(this, modelTrendingList);
         rvTrending.setAdapter(trendingAdapter);
+    }
+
+    private void setGreeting() {
+        // Get username from Intent
+        String username = getIntent().getStringExtra("USERNAME");
+        if (username == null || username.isEmpty()) {
+            username = "User"; // Fallback if username is not provided
+        }
+
+        // Determine time of day (using WIB, UTC+7)
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+
+        if (hour >= 5 && hour < 12) {
+            greeting = "Good morning";
+        } else if (hour >= 12 && hour < 17) {
+            greeting = "Good afternoon";
+        } else if (hour >= 17 && hour < 22) {
+            greeting = "Good evening";
+        } else {
+            greeting = "Good night";
+        }
+
+        // Set the greeting text
+        tvGreeting.setText(greeting + ", " + username + ".");
     }
 
     public void setStatusbar() {

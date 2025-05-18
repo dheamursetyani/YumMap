@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.yummap.R;
+import com.example.yummap.database.UserModel;
 import com.example.yummap.main.MainActivity;
 import com.example.yummap.register.RegisterActivity;
 import com.google.android.material.button.MaterialButton;
@@ -40,16 +41,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setInputData() {
-        btnRegister.setOnClickListener(v -> { // Replaced with lambda
+        btnRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
-        btnLogin.setOnClickListener(v -> { // Replaced with lambda
-            strUsername = String.valueOf(inputUser.getText()); // Fixed potential NullPointerException
-            strPassword = String.valueOf(inputPassword.getText()); // Fixed potential NullPointerException
-
-            loginViewModel.getDataUser(strUsername, strPassword);
+        btnLogin.setOnClickListener(v -> {
+            strUsername = String.valueOf(inputUser.getText());
+            strPassword = String.valueOf(inputPassword.getText());
 
             if (strUsername.isEmpty() || strPassword.isEmpty()) {
                 Toast.makeText(LoginActivity.this, "Ups, Form harus diisi semua!",
@@ -57,9 +56,16 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 loginViewModel.getDataUser(strUsername, strPassword).observe(LoginActivity.this,
                         modelDatabases -> {
-                            if (!modelDatabases.isEmpty()) { // Fixed suggestion
+                            if (!modelDatabases.isEmpty()) {
+                                // Login successful, get username from UserModel
+                                UserModel user = modelDatabases.get(0); // First user in the list
+                                String username = user.getUsername();
+
+                                // Navigate to MainActivity and pass username
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("USERNAME", username);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(LoginActivity.this,
                                         "Ups, Username atau Password Anda salah!", Toast.LENGTH_LONG).show();
