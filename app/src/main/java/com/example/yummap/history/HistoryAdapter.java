@@ -54,8 +54,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         // Toggle button text and visibility based on payment status
         if (data.isPaid()) {
             holder.btnPayNow.setText("Pesan Lagi");
-            if ("makanan sudah sampai".equals(data.getStatus())) {
-                holder.btnPayNow.setVisibility(View.GONE); // Hide if already delivered
+            if ("makanan segera diantar".equals(data.getStatus())) {
+                holder.btnPayNow.setVisibility(View.GONE);
             } else {
                 holder.btnPayNow.setVisibility(View.VISIBLE);
             }

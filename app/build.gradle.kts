@@ -32,11 +32,12 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.play.services.location)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -47,16 +48,16 @@ dependencies {
     implementation(libs.lifecycle.runtime)
     annotationProcessor(libs.lifecycle.compiler)
 
-// Room Database
+    // Room Database
     implementation(libs.room.rxjava3)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
 
-// Glide
+    // Glide
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
 
-// RxJava
+    // RxJava
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
 }

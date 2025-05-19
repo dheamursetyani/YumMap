@@ -98,6 +98,7 @@ public class PaymentActivity extends AppCompatActivity {
             llTransferOptions.setVisibility(View.GONE);
             ivQris.setVisibility(View.GONE);
             tvBankDetails.setVisibility(View.GONE);
+            Toast.makeText(this, "Siapkan uang pas saat pesanan tiba!", Toast.LENGTH_SHORT).show();
         });
 
         btnTransfer.setOnClickListener(v -> {

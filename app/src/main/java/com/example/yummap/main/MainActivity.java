@@ -1,7 +1,9 @@
 package com.example.yummap.main;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,21 +12,33 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yummap.R;
 import com.example.yummap.history.HistoryOrderActivity;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
+
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,40 +51,40 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvCategories, rvTrending;
     CardView cvHistory;
     LinearLayout cvSearch;
-    TextView tvGreeting;
+    TextView tvGreeting, tvLocation;
+    FusedLocationProviderClient fusedLocationClient;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
         setStatusbar();
         setInitLayout();
         setCategories();
         setTrending();
         setGreeting();
+        setLocation();
     }
 
     private void setInitLayout() {
         cvHistory = findViewById(R.id.cvHistory);
         cvSearch = findViewById(R.id.cvSearch);
         tvGreeting = findViewById(R.id.tvGreeting);
+        tvLocation = findViewById(R.id.tvLocation);
 
-        cvHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
-                startActivity(intent);
-            }
+        cvHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistoryOrderActivity.class);
+            startActivity(intent);
         });
 
-        cvSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        cvSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         rvCategories = findViewById(R.id.rvCategories);
@@ -115,13 +129,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setGreeting() {
-        // Get username from Intent
         String username = getIntent().getStringExtra("USERNAME");
         if (username == null || username.isEmpty()) {
-            username = "User"; // Fallback if username is not provided
+            username = "User";
         }
 
-        // Determine time of day (using WIB, UTC+7)
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -137,8 +149,69 @@ public class MainActivity extends AppCompatActivity {
             greeting = "Good night";
         }
 
-        // Set the greeting text
         tvGreeting.setText(greeting + ", " + username + ".");
+    }
+
+    private void setLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            fetchLocation();
+        }
+    }
+
+    private void fetchLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        Task<Location> locationTask = fusedLocationClient.getLastLocation();
+        locationTask.addOnSuccessListener(this, location -> {
+            if (location != null) {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (addresses != null && !addresses.isEmpty()) {
+                        Address address = addresses.get(0);
+                        String addressLine = address.getAddressLine(0);
+                        if (addressLine != null) {
+                            tvLocation.setText(addressLine);
+                        } else {
+                            tvLocation.setText("Lokasi: " + address.getLocality());
+                        }
+                    } else {
+                        tvLocation.setText("Tidak dapat menemukan lokasi");
+                    }
+                } catch (IOException e) {
+                    tvLocation.setText("Error: Tidak dapat mengambil lokasi");
+                }
+            } else {
+                tvLocation.setText("Lokasi tidak tersedia");
+            }
+        }).addOnFailureListener(this, e -> {
+            tvLocation.setText("Gagal mengambil lokasi");
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLocation();
+            } else {
+                tvLocation.setText("Izin lokasi ditolak");
+            }
+        }
     }
 
     public void setStatusbar() {
