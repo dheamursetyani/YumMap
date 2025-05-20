@@ -60,4 +60,7 @@ dependencies {
     // RxJava
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
+
+    // Added dependency
+    implementation("com.google.android.libraries.places:places:3.3.0")
 }

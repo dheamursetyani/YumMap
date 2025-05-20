@@ -1,6 +1,12 @@
 package com.example.yummap.payment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +18,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.yummap.R;
 import com.example.yummap.history.HistoryViewModel;
 import com.example.yummap.utils.FunctionHelper;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.button.MaterialButton;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -25,6 +42,7 @@ public class PaymentActivity extends AppCompatActivity {
     public static final String EXTRA_ITEMS = "EXTRA_ITEMS";
     public static final String EXTRA_PRICE = "EXTRA_PRICE";
     private static final String TAG = "PaymentActivity";
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
     private TextView tvOrderSummary;
     private EditText etFullName, etAddress;
@@ -37,11 +55,22 @@ public class PaymentActivity extends AppCompatActivity {
     private String selectedPaymentMethod = null;
     private HistoryViewModel historyViewModel;
     private int orderUid;
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        // Initialize Fused Location Client
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Check and request location permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            getCurrentLocation();
+        }
 
         setInitLayout();
         setOrderSummary();
@@ -55,6 +84,60 @@ public class PaymentActivity extends AppCompatActivity {
             Log.e(TAG, "Invalid order UID received");
             Toast.makeText(this, "Gagal memproses pembayaran: Order ID tidak valid", Toast.LENGTH_LONG).show();
             finish();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+            } else {
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void getCurrentLocation() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+
+        LocationCallback locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                Location location = locationResult.getLastLocation();
+                if (location != null) {
+                    fetchAddress(location.getLatitude(), location.getLongitude());
+                }
+                fusedLocationClient.removeLocationUpdates(this);
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+        }
+    }
+
+    private void fetchAddress(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                String fullAddress = address.getAddressLine(0); // Gets the full address
+                etAddress.setText(fullAddress);
+            } else {
+                etAddress.setText("Address not found");
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Geocoding failed: " + e.getMessage());
+            etAddress.setText("Error fetching address");
         }
     }
 
