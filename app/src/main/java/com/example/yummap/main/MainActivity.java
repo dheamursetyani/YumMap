@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
         cvSearch.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            intent.putExtra("TRENDING_LIST", new ArrayList<>(modelTrendingList)); // Pass trending list
             startActivity(intent);
-            finish();
+            // Removed finish() to allow back navigation
         });
 
         rvCategories = findViewById(R.id.rvCategories);
@@ -115,13 +116,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setTrending() {
-        modelTrending = new ModelTrending(R.drawable.complete_1, "Menu 1", "2.200 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_1, "Menu 1", "2.200 disukai", "Bento");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_2, "Menu 2", "1.220 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_2, "Menu 2", "1.220 disukai", "Bento");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_3, "Menu 3", "345 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_3, "Menu 3", "345 disukai", "Bento");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_4, "Menu 4", "590 disukai");
+        modelTrending = new ModelTrending(R.drawable.complete_4, "Menu 4", "590 disukai", "Bento");
         modelTrendingList.add(modelTrending);
 
         trendingAdapter = new TrendingAdapter(this, modelTrendingList);
@@ -140,13 +141,13 @@ public class MainActivity extends AppCompatActivity {
         String greeting;
 
         if (hour >= 5 && hour < 12) {
-            greeting = "Good morning";
+            greeting = "Good Morning";
         } else if (hour >= 12 && hour < 17) {
-            greeting = "Good afternoon";
-        } else if (hour >= 17 && hour < 22) {
-            greeting = "Good evening";
+            greeting = "Good Afternoon";
+        } else if (hour >= 17 && hour < 18) {
+            greeting = "Good Evening";
         } else {
-            greeting = "Good night";
+            greeting = "Good Night";
         }
 
         tvGreeting.setText(greeting + ", " + username + ".");
@@ -202,8 +203,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

@@ -1,15 +1,24 @@
 package com.example.yummap.main;
 
-public class ModelTrending {
-
+public class ModelTrending implements java.io.Serializable {
     int imgThumb;
     String tvPlaceName;
     String tvVote;
+    String category; // NEW
 
-    public ModelTrending(int imgThumb, String tvPlaceName, String tvVote) {
+    public ModelTrending(int imgThumb, String tvPlaceName, String tvVote, String category) {
         this.imgThumb = imgThumb;
         this.tvPlaceName = tvPlaceName;
         this.tvVote = tvVote;
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getImgThumb() {

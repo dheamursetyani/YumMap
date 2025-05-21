@@ -26,7 +26,7 @@ public class OrderActivity extends AppCompatActivity {
 
     public static final String DATA_TITLE = "TITLE";
     String strTitle;
-    int paket1 = 10500, paket2 = 34000, paket3 = 23700, paket4 = 22500, paket5 = 16500, paket6 = 26000;
+    int paket1 = 10500, paket2 = 27000, paket3 = 18000, paket4 = 22500, paket5 = 16500, paket6 = 26000;
     int itemCount1 = 0, itemCount2 = 0, itemCount3 = 0, itemCount4 = 0, itemCount5 = 0, itemCount6 = 0;
     int countP1, countP2, countP3, countP4, countP5, countP6, totalItems, totalPrice;
     ImageView imageAdd1, imageAdd2, imageAdd3, imageAdd4, imageAdd5, imageAdd6,

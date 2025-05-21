@@ -226,7 +226,7 @@ public class PaymentActivity extends AppCompatActivity {
                     "COD";
 
             // Update order status and payment status
-            historyViewModel.updateOrderStatus(orderUid, "makanan sudah sampai", true);
+            historyViewModel.updateOrderStatus(orderUid, "makanan segera dikirim", true);
 
             Toast.makeText(this, "Pembayaran berhasil!\n" +
                     "Nama: " + fullName + "\n" +
