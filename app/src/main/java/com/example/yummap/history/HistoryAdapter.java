@@ -109,6 +109,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return modelDatabase.size();
     }
 
+    public DatabaseModel getItem(int position) {
+        return modelDatabase.get(position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvNama, tvDate, tvJml, tvPrice, tvStatus;
         public MaterialButton btnPayNow;
