@@ -26,10 +26,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView1"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/paket_1" />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,26 +50,12 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tvPrice1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tvPaket11"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rp 21.000"
-                                android:textColor="@color/primary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="Rp 10.500"
-                                android:textColor="@color/primary" />
-
-                        </LinearLayout>
+                            android:text="Rp 0"
+                            android:textColor="@color/primary" />
 
                     </LinearLayout>
 
@@ -112,31 +98,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="-20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_promo"
-                android:backgroundTint="@color/primary"
-                android:elevation="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:padding="5dp"
-                    android:text="Promo 50%"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -154,10 +115,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/paket_2" />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -179,9 +140,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvPrice2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp 34.000"
+                            android:text="Rp 0"
                             android:textColor="@color/primary" />
 
                     </LinearLayout>
@@ -249,10 +211,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView3"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/paket_3" />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -274,9 +236,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvPrice3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp 23.700"
+                            android:text="Rp 0"
                             android:textColor="@color/primary" />
 
                     </LinearLayout>
@@ -337,10 +300,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView4"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/paket_4" />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -362,9 +325,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvPrice4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp 22.500"
+                            android:text="Rp 0"
                             android:textColor="@color/primary" />
 
                     </LinearLayout>
@@ -432,10 +396,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/paket_5" />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -457,9 +421,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvPrice5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp 16.500"
+                            android:text="Rp 0"
                             android:textColor="@color/primary" />
 
                     </LinearLayout>
@@ -520,10 +485,10 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageView6"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/paket_6" />
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -545,9 +510,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvPrice6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp 26.000"
+                            android:text="Rp 0"
                             android:textColor="@color/primary" />
 
                     </LinearLayout>

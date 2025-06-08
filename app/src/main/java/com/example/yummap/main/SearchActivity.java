@@ -1,7 +1,7 @@
 package com.example.yummap.main;
 
 import android.os.Bundle;
-import android.os.Handler; // NEW: Import for Handler
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
@@ -69,6 +69,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 performSearch(query);
+                searchView.clearFocus(); // Clear focus to hide keyboard after submit
                 return true;
             }
 
@@ -77,7 +78,12 @@ public class SearchActivity extends AppCompatActivity {
                 if (searchRunnable != null) {
                     handler.removeCallbacks(searchRunnable);
                 }
-                searchRunnable = () -> performSearch(newText);
+                searchRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        performSearch(newText);
+                    }
+                }; // Proper initialization
                 handler.postDelayed(searchRunnable, 300); // 300ms delay
                 return true;
             }
