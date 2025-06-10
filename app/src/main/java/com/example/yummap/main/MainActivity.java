@@ -116,13 +116,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setTrending() {
-        modelTrending = new ModelTrending(R.drawable.complete_1, "Menu 1", "2.200 disukai", "Bento");
+        modelTrending = new ModelTrending(R.drawable.chicken_teriyaki_bento, "Chicken Teriyaki Bento", "956 disukai", "Bento");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_2, "Menu 2", "1.220 disukai", "Bento");
+        modelTrending = new ModelTrending(R.drawable.udang_keju, "Udang Keju", "475 disukai", "Saving Food");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_3, "Menu 3", "345 disukai", "Bento");
+        modelTrending = new ModelTrending(R.drawable.kebab, "Kebab", "345 disukai", "Healthy Food");
         modelTrendingList.add(modelTrending);
-        modelTrending = new ModelTrending(R.drawable.complete_4, "Menu 4", "590 disukai", "Bento");
+        modelTrending = new ModelTrending(R.drawable.samyang, "Samyang Roll", "590 disukai", "Fast Food");
+        modelTrendingList.add(modelTrending);
+        modelTrending = new ModelTrending(R.drawable.mochi, "Mochi", "330 disukai", "Event Food");
+        modelTrendingList.add(modelTrending);
+        modelTrending = new ModelTrending(R.drawable.tiramisu, "Tiramisu", "300 disukai", "Event Food");
+        modelTrendingList.add(modelTrending);
+        modelTrending = new ModelTrending(R.drawable.shrip_rpr, "Shrimp Roll", "330 disukai", "Healthy Food");
         modelTrendingList.add(modelTrending);
 
         trendingAdapter = new TrendingAdapter(this, modelTrendingList);
