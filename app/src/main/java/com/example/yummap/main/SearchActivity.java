@@ -93,10 +93,13 @@ public class SearchActivity extends AppCompatActivity {
     // Fallback: Initialize menu items dataset if not passed from MainActivity
     private void initializeMenuItems() {
         // Align with MainActivity's data
-        menuItems.add(new ModelTrending(R.drawable.complete_1, "Menu 1", "2.200 disukai", "Bento"));
-        menuItems.add(new ModelTrending(R.drawable.complete_2, "Menu 2", "1.220 disukai", "Bento"));
-        menuItems.add(new ModelTrending(R.drawable.complete_3, "Menu 3", "345 disukai", "Bento"));
-        menuItems.add(new ModelTrending(R.drawable.complete_4, "Menu 4", "590 disukai", "Bento"));
+        menuItems.add(new ModelTrending(R.drawable.chicken_teriyaki_bento, "Chicken Teriyaki Bento", "956 disukai", "Bento"));
+        menuItems.add(new ModelTrending(R.drawable.udang_keju, "Udang Keju", "475 disukai", "Saving Food"));
+        menuItems.add(new ModelTrending(R.drawable.kebab, "Kebab", "345 disukai", "Healthy Food"));
+        menuItems.add(new ModelTrending(R.drawable.samyang, "Samyang Roll", "590 disukai", "Fast Food"));
+        menuItems.add(new ModelTrending(R.drawable.mochi, "Mochi", "330 disukai", "Event Food"));
+        menuItems.add(new ModelTrending(R.drawable.tiramisu, "Tiramisu", "300 disukai", "Event Food"));
+        menuItems.add(new ModelTrending(R.drawable.shrip_rpr, "Shrimp Roll", "330 disukai", "Healthy Food"));
     }
 
     // Initialize categories dataset
